@@ -29,12 +29,30 @@ class OpenWeatherService {
      */
     public function currentWeather($city, $uf)
     {
-        return $this->getAPI('data/2.5/weather', [
+        $response = $this->getAPI('data/2.5/weather', [
                 'q' => "{$city},BR-{$uf},BRA"
             ]
         );
-    }
+        if (isset($response['main']) && isset($response['weather'][0])) {
+            $weather = [
+                'temp'        => (int) round($response['main']['temp']),
+                'temp_min'    => (int) round($response['main']['temp_min']),
+                'temp_max'    => (int) round($response['main']['temp_max']),
+                'description' => $response['weather'][0]['description'] ?? '',
+                'icon'        => $response['weather'][0]['icon'] ?? '',
+            ];
+        } else {
+            $weather = [
+                'temp'        => null,
+                'temp_min'    => null,
+                'temp_max'    => null,
+                'description' => '',
+                'icon'        => ''
+            ];
+        }
     
+        return $weather;
+    }
     /**
      * weatherForecast
      * request seven days forecast 
