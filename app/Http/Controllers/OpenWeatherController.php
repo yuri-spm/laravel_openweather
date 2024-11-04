@@ -20,6 +20,14 @@ class OpenWeatherController extends Controller
        
         $result = $instance->currentWeather($city->city, $city->uf);
         dd($result);     
+    }
 
+    public function show()
+    {
+        $instance = new OpenWeatherService();
+        $city = $locations = State::where('city','Rondônia')->first();
+       
+        $result = $instance->weatherForecast($city->city, $city->uf);
+        dd($result);     
     }
 }
