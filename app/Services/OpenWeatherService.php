@@ -4,8 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-use function Ramsey\Uuid\v1;
-
 class OpenWeatherService {
 
     private $api_key;
@@ -33,6 +31,7 @@ class OpenWeatherService {
                 'q' => "{$city},BR-{$uf},BRA"
             ]
         );
+
         if (isset($response['main']) && isset($response['weather'][0])) {
             $weather = [
                 'temp'        => (int) round($response['main']['temp']),
@@ -83,7 +82,6 @@ class OpenWeatherService {
             return $weather_forecast;
                 
         }
-
        
     }
     
@@ -105,4 +103,5 @@ class OpenWeatherService {
         ->throw()
         ->json();
     }
+    
 }
