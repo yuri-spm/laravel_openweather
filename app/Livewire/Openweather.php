@@ -9,30 +9,31 @@ use App\Services\OpenWeatherService;
 class Openweather extends Component
 {
     public $result;
-    public $city;
-    public $selectedCity; 
+    public $city = '';
 
     public function render()
     {
-        $cities = State::all();
-        return view('livewire.openweather', compact('cities'));
+        return view('livewire.openweather');
     }
 
     public function getCurrentWeather()
     {
-        if ($this->selectedCity) {
+        if ($this->city) {
             $instance = new OpenWeatherService();
-            $city = State::find($this->selectedCity);
-            $this->result = $instance->currentWeather($city->city, $city->uf);
+            
+            if ($this->city) {
+                $this->result = $instance->currentWeather( $this->city);
+            } else {
+                $this->result = ['error' => 'Cidade não encontrada'];
+            }
         }
     }
 
     public function getForecastWeather()
     {
-        if ($this->selectedCity) {
+        if ($this->city) {
             $instance = new OpenWeatherService();
-            $city = State::find($this->selectedCity);
-            $this->result = $instance->weatherForecast($city->city, $city->uf);
+            $this->result = $instance->weatherForecast($this->city);
         }
     }
 }

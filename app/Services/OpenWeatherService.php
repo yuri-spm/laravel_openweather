@@ -25,10 +25,10 @@ class OpenWeatherService {
      * @param  mixed $uf
      * @return void
      */
-    public function currentWeather($city, $uf)
+    public function currentWeather($city)
     {
         $response = $this->getAPI('data/2.5/weather', [
-                'q' => "{$city},BR-{$uf},BRA"
+                'q' => "{$city}"
             ]
         );
 
@@ -37,8 +37,11 @@ class OpenWeatherService {
                 'temp'        => (int) round($response['main']['temp']),
                 'temp_min'    => (int) round($response['main']['temp_min']),
                 'temp_max'    => (int) round($response['main']['temp_max']),
+                'humidity'    => (int) round($response['main']['humidity']),
+                'wind'    => (int) round($response['wind']['speed']),
                 'description' => $response['weather'][0]['description'] ?? '',
                 'icon'        => $response['weather'][0]['icon'] ?? '',
+                
             ];
         } else {
             $weather = [
@@ -59,10 +62,10 @@ class OpenWeatherService {
      * @param  mixed $uf
      * @return void
      */
-    public function weatherForecast($city, $uf)
+    public function weatherForecast($city)
     {
         $response = $this->getAPI('data/2.5/forecast', [
-                'q' => "{$city},BR-{$uf},BRA"
+                'q' => "{$city}"
             ]
         );
 
