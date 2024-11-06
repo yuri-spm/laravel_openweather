@@ -87,8 +87,8 @@
                         <h2>Humidade</h2>
 
                         <p id="humidity">
-                            @if(!empty($result['temp_min']))
-                            {{ $result['temp_min']}}
+                            @if(!empty($result['humidity']))
+                            {{ $result['humidity']}}%
                         @else
                             50%
                         @endif
@@ -103,8 +103,8 @@
                         <h2>Vento</h2>
 
                         <p id="wind">
-                            @if(!empty($result['temp_min']))
-                            {{ $result['temp_min'] }}
+                            @if(!empty($result['wind']))
+                            {{ $result['wind'] }} KM/H
                         @else
                             50 KM/H
                         @endif
