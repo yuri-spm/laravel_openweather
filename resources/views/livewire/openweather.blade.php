@@ -1,50 +1,119 @@
-<div>
-    <h1>Previsão do Tempo</h1>
+<div id="container">
+    <form id="search" wire:submit.prevent="getCurrentWeather">
+        <i class="fa-solid fa-location-dot"></i>
+        <input 
+            type="search" 
+            name="city_name" 
+            id="city_name" 
+            placeholder="Buscar cidade"
+            wire:model="city"
+        >
+        <button type="button" wire:click.prevent="getCurrentWeather">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
 
-    <select wire:model="selectedCity" class="form-select" aria-label="Default select example">
-        <option value="">Selecione um estado</option>
-        @foreach ($cities as $city)
-            <option value="{{ $city->id }}">{{ $city->city }}</option>
-        @endforeach
-    </select>
+    <div id="weather">
+        <h1 id="title">
+            @if(!empty($city))
+                {{$city}}, BR
+            @else
+                Rio de Janeiro, BR
+            @endif
+        </h1>
 
-    <button wire:click="getCurrentWeather">Clima Atual</button>
-    <button wire:click="getForecastWeather">Previsão do Tempo</button>
-
-    @if (!empty($result))
-        @if (isset($result['temp']))
-            <div>
-                <h2>Clima Atual:</h2>
-                <p><img src="http://openweathermap.org/img/wn/{{ $result['icon'] }}@2x.png" alt="Ícone"></p>
-                <p>Temperatura: {{ $result['temp'] }}</p>
-                <p>Temperatura Mínima: {{ $result['temp_min'] }}</p>
-                <p>Temperatura Máxima: {{ $result['temp_max'] }}</p>
-                <p>Descrição: {{ $result['description'] }}</p>
-                
+        <div id="infos">
+            <div id="temp">
+                @if(!empty($result['icon']))
+                    <img id="temp_img" src="http://openweathermap.org/img/wn/{{ $result['icon'] }}@2x.png" alt="">
+                @else
+                    <img id="temp_img" src="http://openweathermap.org/img/wn/04d@2x.png" alt="">
+                @endif
+                <div>
+                    <p id="temp_value">
+                        @if(!empty($result['temp']))
+                            {{ $result['temp'] }} <sup>°C</sup>
+                        @else
+                             <sup>C°</sup> 
+                        @endif
+                    </p>
+                    <p id="temp_description">
+                        @if(!empty($result['description']))
+                            {{ $result['description'] }}
+                        @else
+                           
+                        @endif
+                    </p>
+                </div>
             </div>
-        @else
-            <div>
-                <h2>Previsão do Tempo:</h2>
-                @foreach ($result as $day)
-                    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                        <p>Data: {{$day['date']}}</p>
-                        <p> 
-                            @if(isset($day['icon']))
-                                <img src="http://openweathermap.org/img/wn/{{ $day['icon'] }}@2x.png" alt="Ícone">
-                            @else
-                                N/A
-                            @endif
+
+            <div id="other_infos">
+                <div class="info">
+                    <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
+
+                    <div>
+                        <h2>Temp. max</h2>
+
+                        <p id="temp_max">
+                            @if(!empty($result['temp_max']))
+                            {{ $result['temp_max'] }} C°</sup>
+                        @else
+                            <sup>C°</sup> 
+                        @endif
                         </p>
-                        <p>Temperatura: {{ $day['temp'] ?? 'N/A' }}</p>
-                        <p>Temperatura Mínima: {{ $day['temp_min'] ?? 'N/A' }}</p>
-                        <p>Temperatura Máxima: {{ $day['temp_max'] ?? 'N/A' }}</p>
-                        <p>Descrição: {{ $day['description'] ?? 'N/A' }}</p>
-                        
                     </div>
-                @endforeach
+                </div>
+
+                <div class="info">
+                    <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
+
+                    <div>
+                        <h2>Temp. min</h2>
+
+                        <p id="temp_min">
+                            @if(!empty($result['temp_min']))
+                            {{ $result['temp_min'] }} C°</sup>
+                        @else
+                           <sup> C°</sup> 
+                        @endif
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <i id="humidity_icon" class="fa-solid fa-droplet"></i>
+
+                    <div>
+                        <h2>Humidade</h2>
+
+                        <p id="humidity">
+                            @if(!empty($result['temp_min']))
+                            {{ $result['temp_min']}}
+                        @else
+                            50%
+                        @endif
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <i id="wind_icon" class="fa-solid fa-wind"></i>
+
+                    <div>
+                        <h2>Vento</h2>
+
+                        <p id="wind">
+                            @if(!empty($result['temp_min']))
+                            {{ $result['temp_min'] }}
+                        @else
+                            50 KM/H
+                        @endif
+                        </p>
+                    </div>
+                </div>
             </div>
-        @endif
-    @else
-        <p>Selecione uma cidade e clique em um dos botões para exibir a previsão do tempo.</p>
-    @endif
+        </div>
+    </div>
+
+    <div id="alert"></div>
 </div>
