@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OpenWeatherController;
+use App\Livewire\Openweather;
 
 // Route::view('/', 'welcome');
 
@@ -17,5 +17,5 @@ use App\Http\Controllers\OpenWeatherController;
 
 require __DIR__.'/auth.php';
 //OpenWeather
-Route::get('/', [OpenWeatherController::class, 'index']);
-Route::get('/show', [OpenWeatherController::class, 'show']);
+Route::get('/', Openweather::class);
+// Route::get('/show', [OpenWeatherController::class, 'show']);
