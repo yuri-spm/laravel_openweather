@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\RequestException;
 
 class OpenWeatherService {
 
@@ -46,7 +47,7 @@ class OpenWeatherService {
                 ];
             }
 
-        }catch(\Illuminate\Http\Client\RequestException $e){
+        }catch(RequestException $e){
             return ['error' => "Cidade não encontrada"];
         }
         
@@ -62,27 +63,28 @@ class OpenWeatherService {
      */
     public function weatherForecast($city)
     {
-        $response = $this->getAPI('data/2.5/forecast', [
-                'q' => "{$city}"
-            ]
-        );
+        try{
+            $response = $this->getAPI('data/2.5/forecast', [
+                    'q' => "{$city}"
+                ]
+            );
 
-        if (isset($response['list']) && is_array($response['list'])) {
-            $weather_forecast = collect($response['list'])
-                ->take(10)
-                ->map(function($item){
-                    return[
-                       'date'        =>  \Carbon\Carbon::parse($item['dt_txt'])->format('d/m/Y H:i') ,
-                       'temp'        => (int)round($item['main']['temp']),
-                       'temp_min'    => (int)round($item['main']['temp_min']),
-                       'temp_max'    => (int)round($item['main']['temp_max']),
-                       'description' => $item['weather'][0]['description'] ?? '',
-                       'icon'        => $item['weather'][0]['icon'] ?? '',
-                    ];
-                });
-
-            return $weather_forecast;
-                
+            if (isset($response['list']) && is_array($response['list'])) {
+                return collect($response['list'])
+                    ->take(10)
+                    ->map(function($item){
+                        return[
+                        'date'        =>  \Carbon\Carbon::parse($item['dt_txt'])->format('d/m/Y H:i') ,
+                        'temp'        => (int)round($item['main']['temp']),
+                        'temp_min'    => (int)round($item['main']['temp_min']),
+                        'temp_max'    => (int)round($item['main']['temp_max']),
+                        'description' => $item['weather'][0]['description'] ?? '',
+                        'icon'        => $item['weather'][0]['icon'] ?? '',
+                        ];
+                    });        
+            }
+        }catch(RequestException $e){
+            return ['error' => "Cidade não encontrada"];
         }
        
     }
