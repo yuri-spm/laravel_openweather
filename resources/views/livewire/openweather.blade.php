@@ -90,7 +90,7 @@
                             @if(!empty($result['humidity']))
                             {{ $result['humidity']}}%
                         @else
-                            50%
+                            %
                         @endif
                         </p>
                     </div>
@@ -106,7 +106,7 @@
                             @if(!empty($result['wind']))
                             {{ $result['wind'] }} KM/H
                         @else
-                            50 KM/H
+                            KM/H
                         @endif
                         </p>
                     </div>
