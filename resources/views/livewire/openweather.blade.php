@@ -15,10 +15,10 @@
 
     <div id="weather">
         <h1 id="title">
-            @if(!empty($city))
-                {{$city}}, BR
-            @else
-                Rio de Janeiro, BR
+            @if(!empty($city) and empty($result['error']) )
+                {{$city}}
+            @elseif(!empty($result['error']))
+                {{ $result['error'] }}
             @endif
         </h1>
 
@@ -115,5 +115,6 @@
         </div>
     </div>
 
-    <div id="alert"></div>
+    <div id="alert">
+    </div>
 </div>
