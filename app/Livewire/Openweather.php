@@ -20,12 +20,7 @@ class Openweather extends Component
     {
         if ($this->city) {
             $instance = new OpenWeatherService();
-            
-            if ($this->city) {
-                $this->result = $instance->currentWeather( $this->city);
-            } else {
-                $this->result = ['error' => 'Cidade não encontrada'];
-            }
+            $this->result = $instance->currentWeather( $this->city);
         }
     }
 
