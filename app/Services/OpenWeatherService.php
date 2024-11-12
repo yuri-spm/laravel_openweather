@@ -27,33 +27,31 @@ class OpenWeatherService {
      */
     public function currentWeather($city)
     {
-        $response = $this->getAPI('data/2.5/weather', [
-                'q' => "{$city}"
-            ]
-        );
-
-        if (isset($response['main']) && isset($response['weather'][0])) {
-            $weather = [
-                'temp'        => (int) round($response['main']['temp']),
-                'temp_min'    => (int) round($response['main']['temp_min']),
-                'temp_max'    => (int) round($response['main']['temp_max']),
-                'humidity'    => (int) round($response['main']['humidity']),
-                'wind'    => (int) round($response['wind']['speed']),
-                'description' => $response['weather'][0]['description'] ?? '',
-                'icon'        => $response['weather'][0]['icon'] ?? '',
-                
-            ];
-        } else {
-            $weather = [
-                'temp'        => null,
-                'temp_min'    => null,
-                'temp_max'    => null,
-                'description' => '',
-                'icon'        => ''
-            ];
-        }
+        try{
+            $response = $this->getAPI('data/2.5/weather', [
+                    'q' => "{$city}"
+                ]
+            );
     
-        return $weather;
+            if (isset($response['main']) && isset($response['weather'][0])) {
+                return  [
+                    'temp'        => (int) round($response['main']['temp']),
+                    'temp_min'    => (int) round($response['main']['temp_min']),
+                    'temp_max'    => (int) round($response['main']['temp_max']),
+                    'humidity'    => (int) round($response['main']['humidity']),
+                    'wind'    => (int) round($response['wind']['speed']),
+                    'description' => $response['weather'][0]['description'] ?? '',
+                    'icon'        => $response['weather'][0]['icon'] ?? '',
+                    
+                ];
+            }
+
+        }catch(\Illuminate\Http\Client\RequestException $e){
+            return ['error' => "Cidade não encontrada"];
+        }
+        
+    
+        
     }
     /**
      * weatherForecast
