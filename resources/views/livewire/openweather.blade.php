@@ -8,7 +8,7 @@
             placeholder="Buscar cidade"
             wire:model="city"
         >
-        <button type="button" wire:click.prevent="getCurrentWeather">
+        <button type="button" wire:click.prevent="getCurrentWeather" id="search_button">
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
     </form>
@@ -117,4 +117,15 @@
 
     <div id="alert">
     </div>
+
+    <script>
+        document.getElementById('search_button').addEventListener('click', function() {
+            document.getElementById('city_name').value = '';
+        });
+
+        document. addEventListener('keypress', function(event) { if (event. key === 'Enter') { 
+            document.getElementById('city_name').value = ''; 
+            } 
+        });
+    </script>
 </div>
