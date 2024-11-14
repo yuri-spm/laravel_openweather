@@ -24,14 +24,7 @@ class Openweather extends Component
         if ($this->city) {
             $instance = new OpenWeatherService();
             $this->result = $instance->currentWeather( $this->city);
-        }
-    }
-
-    public function getForecastWeather()
-    {
-        if ($this->city) {
-            $instance = new OpenWeatherService();
-            $this->result = $instance->weatherForecast($this->city);
+             $this->dispatch('cidadeAtualizada', $this->city);
         }
     }
 }
