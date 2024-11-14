@@ -1,5 +1,8 @@
 <div id="container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Clique aqui para ter a previsão ao longo das horas</button><br><br>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forecastModal">
+        Clique aqui para ter a previsão ao longo das horas
+    </button><br><br>
+    
     <form id="search" wire:submit.prevent="getCurrentWeather">
         <i class="fa-solid fa-location-dot"></i>
         <input 
@@ -17,9 +20,9 @@
     <div id="weather">
         <h1 id="title">
             @if(!empty($city) and empty($result['error']) )
-                {{$city}}
+                {{ strtoupper($city) }}
             @elseif(!empty($result['error']))
-                {{ $result['error'] }}
+                {{ strtoupper($result['error']) }}
             @endif
         </h1>
 
@@ -128,5 +131,19 @@
             document.getElementById('city_name').value = ''; 
             } 
         });
+
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('closeModal', function () {
+            var modalElement = new bootstrap.Modal(document.getElementById('forecastModal'));
+            modalElement.hide();
+         });
+
+        Livewire.on('openModal', function () {
+            setTimeout(function () {
+                var modalElement = new bootstrap.Modal(document.getElementById('forecastModal'));
+                modalElement.show();
+            }, 300); // Espera 300ms para abrir novamente
+        });
+});
     </script>
 </div>
