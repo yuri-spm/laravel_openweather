@@ -1,4 +1,5 @@
 <div id="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Clique aqui para ter a previsão ao longo das horas</button><br><br>
     <form id="search" wire:submit.prevent="getCurrentWeather">
         <i class="fa-solid fa-location-dot"></i>
         <input 
