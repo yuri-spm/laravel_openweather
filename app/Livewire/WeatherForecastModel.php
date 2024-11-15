@@ -42,7 +42,8 @@ class WeatherForecastModel extends Component
     public function getCity($city)
     {
         $this->city = $city;
-        $this->getForecastWeather();
+        $this->getForecastWeather( $this->city);
+        $this->showModal();
     }
     
     /**
