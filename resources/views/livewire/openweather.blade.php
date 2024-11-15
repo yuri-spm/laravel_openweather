@@ -1,6 +1,6 @@
 <div id="container">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forecastModal">
-        Clique aqui para ter a previsão ao longo das horas
+        Clique aqui para obter a previsão ao longo das horas
     </button><br><br>
     
     <form id="search" wire:submit.prevent="getCurrentWeather">
@@ -38,7 +38,7 @@
                         @if(!empty($result['temp']))
                             {{ $result['temp'] }} <sup>°C</sup>
                         @else
-                             <sup>C°</sup> 
+                             <sup>°c</sup> 
                         @endif
                     </p>
                     <p id="temp_description">
@@ -60,7 +60,7 @@
 
                         <p id="temp_max">
                             @if(!empty($result['temp_max']))
-                            {{ $result['temp_max'] }} C°</sup>
+                            {{ $result['temp_max'] }}<sup> °c</sup> 
                         @else
                             <sup>C°</sup> 
                         @endif
@@ -76,9 +76,9 @@
 
                         <p id="temp_min">
                             @if(!empty($result['temp_min']))
-                            {{ $result['temp_min'] }} C°</sup>
+                            {{ $result['temp_min'] }} <sup>°c</sup> 
                         @else
-                           <sup> C°</sup> 
+                           <sup> °c</sup> 
                         @endif
                         </p>
                     </div>
