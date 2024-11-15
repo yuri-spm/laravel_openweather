@@ -148,3 +148,25 @@ body {
     width: 200px;
     margin-top: 20px;
 }
+
+
+#modalItem{
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.spanIten{
+    text-align: center;
+}
+
+#itensModal{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+}
+
+.card-body{
+    background: linear-gradient(90deg, #5a7cdc, #606dde);
+}
