@@ -74,7 +74,7 @@ class OpenWeatherService {
                     ->take(10)
                     ->map(function($item){
                         return[
-                        'date'        =>  \Carbon\Carbon::parse($item['dt_txt'])->format('d/m/Y H:i') ,
+                        'date'        =>  \Carbon\Carbon::parse($item['dt_txt'])->format('d/m H:i') ,
                         'temp'        => (int)round($item['main']['temp']),
                         'temp_min'    => (int)round($item['main']['temp_min']),
                         'temp_max'    => (int)round($item['main']['temp_max']),
